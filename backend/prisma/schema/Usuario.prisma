@@ -1,0 +1,16 @@
+model Usuario {
+  id                 String      @id @default(uuid()) @db.Uuid
+  email              String      @unique
+  nombre             String      @db.VarChar(100)
+  passwordHash       String
+  rol                Rol
+  activo             Boolean     @default(true)
+  claveCambiadaEn    DateTime?
+  empleadoId         String?     @unique @db.Uuid
+  empleado           Empleado?   @relation(fields: [empleadoId], references: [id])
+  movimientos         Movimiento[] @relation("MovimientoRegistrador")
+  periodosCerrados    Periodo[]    @relation("PeriodoCerrador")
+  auditorias          Auditoria[]
+  creadoEn            DateTime     @default(now())
+  actualizadoEn       DateTime     @updatedAt
+}

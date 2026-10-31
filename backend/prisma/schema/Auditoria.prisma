@@ -1,0 +1,14 @@
+model Auditoria {
+  id               String   @id @default(uuid()) @db.Uuid
+  usuarioId        String?  @db.Uuid
+  usuario          Usuario? @relation(fields: [usuarioId], references: [id])
+  accion           String   @db.VarChar(100)
+  entidad          String   @db.VarChar(100)
+  entidadId        String   @db.VarChar(100)
+  antes            Json?
+  despues          Json?
+  ip               String?  @db.VarChar(64)
+  fecha            DateTime @default(now())
+  creadoEn         DateTime @default(now())
+  actualizadoEn    DateTime @updatedAt
+}

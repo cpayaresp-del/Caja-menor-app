@@ -1,0 +1,13 @@
+model Caja {
+  id               String       @id @default(uuid()) @db.Uuid
+  nombre           String       @db.VarChar(100)
+  responsableId    String       @db.Uuid
+  responsable      Empleado     @relation(fields: [responsableId], references: [id])
+  montoFondo       Int
+  topePorGasto     Int
+  estado           EstadoCaja   @default(ABIERTA)
+  movimientos      Movimiento[]
+  periodos         Periodo[]
+  creadoEn         DateTime     @default(now())
+  actualizadoEn    DateTime     @updatedAt
+}

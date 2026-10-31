@@ -1,0 +1,30 @@
+model Movimiento {
+  id                String         @id @default(uuid()) @db.Uuid
+  cajaId            String         @db.Uuid
+  caja              Caja           @relation(fields: [cajaId], references: [id])
+  periodoId         String         @db.Uuid
+  periodo           Periodo        @relation(fields: [periodoId], references: [id])
+  tipo              TipoMovimiento
+  valor             Int
+  signoAjuste       Int?
+  fecha             DateTime       @default(now())
+  concepto          String         @db.VarChar(500)
+  categoriaId       String?        @db.Uuid
+  categoria         CategoriaGasto? @relation(fields: [categoriaId], references: [id])
+  empleadoId        String?        @db.Uuid
+  empleado          Empleado?      @relation("MovimientoEmpleado", fields: [empleadoId], references: [id])
+  beneficiario      String         @db.VarChar(200)
+  nitBeneficiario   String?        @db.VarChar(40)
+  numeroSoporte     String?        @db.VarChar(100)
+  soporteUrl        String?
+  registradoPorId   String         @db.Uuid
+  registradoPor     Usuario        @relation("MovimientoRegistrador", fields: [registradoPorId], references: [id])
+  anulaA            String?        @unique @db.Uuid
+  originalAnulado   Movimiento?    @relation("Anulacion", fields: [anulaA], references: [id])
+  anulacion         Movimiento?    @relation("Anulacion")
+  motivoAnulacion   String?
+  creadoEn          DateTime       @default(now())
+  actualizadoEn     DateTime       @updatedAt
+
+  @@index([cajaId, periodoId, fecha])
+}

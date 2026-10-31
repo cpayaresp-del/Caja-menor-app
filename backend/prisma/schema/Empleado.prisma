@@ -1,0 +1,31 @@
+enum TipoDocumento {
+  CC
+  CE
+  PA
+  TI
+  PPT
+}
+
+model Empleado {
+  id                 String          @id @default(uuid()) @db.Uuid
+  tipoDocumento      TipoDocumento
+  numeroDocumento    String          @db.VarChar(40)
+  nombres            String          @db.VarChar(100)
+  apellidos          String          @db.VarChar(100)
+  cargo              String          @db.VarChar(100)
+  area               String          @db.VarChar(100)
+  telefono           String          @db.VarChar(30)
+  email              String?         @db.VarChar(254)
+  fechaIngreso       DateTime        @db.Date
+  fechaRetiro        DateTime?       @db.Date
+  estado             EstadoEmpleado  @default(ACTIVO)
+  observaciones      String?
+  usuario            Usuario?
+  cajasResponsable   Caja[]
+  anticipos          Movimiento[]    @relation("MovimientoEmpleado")
+  creadoEn           DateTime        @default(now())
+  actualizadoEn      DateTime        @updatedAt
+
+  @@unique([tipoDocumento, numeroDocumento])
+  @@index([apellidos, nombres])
+}

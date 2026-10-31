@@ -1,0 +1,29 @@
+enum Rol {
+  ADMIN
+  CAJERO
+  CONSULTA
+}
+
+enum EstadoEmpleado {
+  ACTIVO
+  INACTIVO
+}
+
+enum EstadoCaja {
+  ABIERTA
+  CERRADA
+}
+
+enum EstadoPeriodo {
+  ABIERTO
+  CERRADO
+}
+
+enum TipoMovimiento {
+  GASTO
+  ANTICIPO
+  LEGALIZACION
+  REEMBOLSO
+  AJUSTE_ARQUEO
+  ANULACION
+}
